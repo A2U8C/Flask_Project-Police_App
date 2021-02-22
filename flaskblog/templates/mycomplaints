@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div><h2>List Of Active Complaints</h2></div>
+    {% for complaint in complaints %}
+
+   <div class="card m-5 p-3 "  >
+    <div class="card header"><h2>Complainant: {{ complaint.complainant }}</h2></div>
+     <small class="text-muted">Created on: {{ complaint.date_posted.strftime('%d-%m-%Y' ) }}</small>
+      <ul class="list-group list-group-flush" > 
+        <li class="list-group-item"><h4 >Date of Crime: {{complaint.doc}}</h4></li>
+        <li class="list-group-item"><h5 >Sections of IPS: {{complaint.sections}}</h5></li>
+        <li class="list-group-item"><h5 >Name of Victim: {{complaint.victim}}</h5></li>
+        <li class="list-group-item"><h5 >Complainant's Phone no.: {{complaint.compph}}</h5></li>
+        <li class="list-group-item"><h5 >Complaianant's Address : {{complaint.compadd}}</h5></li>
+        <li class="list-group-item"><h5 >Victim's Phone no.: {{complaint.victph}}</h5></li>
+        <li class="list-group-item"><h5 >Victim's Address.: {{complaint.victadd}}</h5></li>
+        <li class="list-group-item", ><p><h5 >Description of Crime: {{complaint.description}}</h5></p></li>
+      </ul>
+    <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{url_for('updatecomplaint',complaint_id=complaint.id)}}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+       </div>
+    </div>
+
+    
+    
+    <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete Complaint</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form action="{{url_for('delete_complaint',complaint_id=complaint.id)}}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+    {% endfor %}
+{% endblock content %}
